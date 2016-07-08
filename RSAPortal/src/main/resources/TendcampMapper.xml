@@ -1,0 +1,42 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rsaseguros.persistence.mapper.ITendcampMapper">
+	
+	<!-- Mapping -->
+	<resultMap type="com.rsaseguros.persistence.model.TendcampDO" id="TendcampDO">
+		<id column="cdtipend" property="cdtipend"  />
+		<result column="nmtabcam" property="nmtabcam" />	
+		<result column="dscampo" property="dscampo" />
+		<result column="cdtabla" property="cdtabla" />	
+		<result column="cdcampo" property="cdcampo" />
+		<result column="cdatribu" property="cdatribu" />	
+		<result column="cdnivel" property="cdnivel" />
+		<result column="sqlcatal" property="sqlcatal" />	
+		<result column="swhabili" property="swhabili" />
+	</resultMap>
+	
+	<select id="getAll" resultType="com.rsaseguros.persistence.model.TendcampDO">
+		select * from POR_TENDOSOS
+	</select>
+	<insert id="insert" parameterType="com.rsaseguros.persistence.model.TendcampDO">
+		insert into POR_TENDOSOS
+		(CDTIPEND,NMTABCAM,DSCAMPO,CDTABLA,CDCAMPO,CDATRIBU,CDNIVEL,SQLCATAL,SWHABILI)
+		values
+		(#{cdtipend},#{nmtabcam},#{dscampo},#{cdtabla},#{cdcampo},#{cdatribu},#{cdnivel},#{sqlcatal},#{swhabili})
+	</insert>
+	<update id="update" parameterType="com.rsaseguros.persistence.model.TendcampDO">
+		update POR_TENDOSOS set
+			CDTIPEND = #{cdtipend},
+			NMTABCAM = #{nmtabcam},
+			DSCAMPO = #{dscampo},
+			CDTABLA = #{cdtabla},
+			CDCAMPO = #{cdcampo}
+			CDATRIBU = #{cdatribu},
+			CDNIVEL = #{cdnivel},
+			SQLCATAL = #{sqlcatal},
+			SWHABILI = #{swhabili}
+		where CDTIPEND = #{cdtipend}
+	</update>
+	<delete id="remove" parameterType="com.rsaseguros.persistence.model.TendcampDO">
+		delete from POR_TENDOSOS where CDTIPEND = #{cdtipend}
+    </delete>
+</mapper>

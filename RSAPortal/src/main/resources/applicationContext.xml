@@ -1,0 +1,40 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd"
+	default-autowire="byName">
+
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="transactionFactory" ref="springManagedTransactionFactory" />
+	</bean>
+
+	<bean class="org.mybatis.spring.transaction.SpringManagedTransactionFactory"
+		id="springManagedTransactionFactory">
+		<constructor-arg index="0" ref="dataSource" />
+	</bean>
+	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@OPS$DGSANCHE:1521:xe" />
+		<property name="username" value="OPS$DGSANCHE" />
+		<property name="password" value="rsa" />
+	</bean>
+	
+	<!-- <bean id="seguridadSrv" class="com.rsaseguros.portal.services.impl.SeguridadService" /> -->
+	<!-- <bean class="com.rsaseguros.portal.apiServices.SecurityService" scope="request"/> -->
+	
+	<bean id="tendcampMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.rsaseguros.persistence.mapper.ITendcampMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+</beans>
